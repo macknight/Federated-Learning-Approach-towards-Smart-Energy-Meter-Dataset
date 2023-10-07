@@ -8,7 +8,7 @@ Original file is located at
 """
 
 #@test {"skip": true}
-!pip install --quiet --upgrade tensorflow-federated
+# !pip install --quiet --upgrade tensorflow-federated
 
 import tensorflow as tf
 import tensorflow_federated as tff

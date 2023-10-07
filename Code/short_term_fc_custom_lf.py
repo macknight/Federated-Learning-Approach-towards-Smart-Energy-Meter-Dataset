@@ -14,7 +14,7 @@ TRAINING OF THE SEQUENTIAL MODELS IN FEDERATED SETUP
 #@test {"skip": true}
 
 # Install or upgrade TensorFlow Federated library
-!pip install --quiet --upgrade tensorflow-federated
+# !pip install --quiet --upgrade tensorflow-federated
 
 import collections
 import numpy as np
