@@ -1,4 +1,6 @@
 # Federated-Learning-Approach-towards-Smart-Energy-Meter-Dataset
+#python version:Python 3.10.13
+#python-pip version:pip 23.2.1 from /home/william/repo/Federated-Learning-Approach-towards-Smart-Energy-Meter-Dataset/venv/lib/python3.10/site-packages/pip (python 3.10)
 
 This project is part of Msc Thesis at Trinity College Dublin. 
 

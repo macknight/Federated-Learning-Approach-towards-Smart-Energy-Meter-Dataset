@@ -34,7 +34,7 @@ tff.federated_computation(lambda: 'Hello, World!')()
 import pandas as pd
 
 # Load the data from the CSV file into a Pandas DataFrame
-data = pd.read_csv('C:\\Users\\23304161\\Desktop\\LCL-FullData\\Cluster9data.csv')
+data = pd.read_csv('/home/william/Cluster9data.csv')
 
 # Convert the 'DateTime' column to datetime objects
 data['DateTime'] = pd.to_datetime(data['DateTime'])
