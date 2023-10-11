@@ -28,13 +28,13 @@ np.random.seed(0)
 tff.federated_computation(lambda: 'Hello, World!')()
 
 # Mount Google Drive to access the data file
-from google.colab import drive
-drive.mount('/content/drive')
+# from google.colab import drive
+# drive.mount('/content/drive')
 
 import pandas as pd
 
 # Load the data from the CSV file into a Pandas DataFrame
-data = pd.read_csv('/content/drive/MyDrive/LAB3-20221109T160610Z-001/LCL-FullData/Cluster9data.csv')
+data = pd.read_csv('C:\\Users\\23304161\\Desktop\\LCL-FullData\\Cluster9data.csv')
 
 # Convert the 'DateTime' column to datetime objects
 data['DateTime'] = pd.to_datetime(data['DateTime'])
@@ -378,7 +378,7 @@ for i in range(48):
     ft_data[i] = ft_data[i].drop('cluster', axis=1)
     ft_data[i] = ft_data[i].drop('stdorToU', axis=1)
 
-ft_data[5]
+# ft_data[5]
 
 for j in range(48):
   ft_data[j]['DateTime'] = pd.to_datetime(ft_data[j].DateTime).dt.tz_localize(None)
@@ -391,7 +391,7 @@ for i in range(48):
 
 test_client = ft_data[7]['LCLid'].unique()
 
-test_client
+# test_client
 
 test_dataset = []
 
@@ -417,7 +417,7 @@ for i in range(48):
     # Append the element data to the test_dataset array
     test_dataset.append(element_data)
 
-test_dataset[6]
+# test_dataset[6]
 
 federated_test_data = []
 for i in range(48):

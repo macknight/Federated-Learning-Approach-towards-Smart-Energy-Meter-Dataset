@@ -12,16 +12,18 @@ Original file is located at
 import numpy as np
 import pandas as pd
 
+print("h1")
 # importing the London energy dataset
-data=pd.read_csv('LCL-FullData\CC_LCL-FullData.csv')
+data=pd.read_csv('C:\\Users\\23304161\\Desktop\\LCL-FullData\\CC_LCL-FullData.csv')
 
+print("h2")
 # Checking the unique rows count of every column
-data.describe()
+# data.describe()
 
-data['LCLid'].unique()
+# data['LCLid'].unique()
 
 # Checking the datatype of all columns
-data.info()
+# data.info()
 
 num_unique_customers = len(data['LCLid'].unique())
 print("Number of unique customers: ", num_unique_customers)
@@ -30,27 +32,27 @@ print("Number of unique customers: ", num_unique_customers)
 data.columns = ['LCLid', 'stdorToU', 'DateTime', 'KWH/hh']
 print(data.columns)
 
-data
+# data
 
-# Checking the NAN values for each column
-data.isna().sum()
+# # Checking the NAN values for each column
+# data.isna().sum()
 
-# Checking the Null values for each column
-data.isnull().sum()
+# # Checking the Null values for each column
+# data.isnull().sum()
 
 # making KWH/hh float type
 data2 = data.copy()
 data2['KWH/hh'] = data2['KWH/hh'].replace('Null', np.nan).astype('float32')
-data2.info()
+# data2.info()
 
-data2
+# data2
 
 # checking kwh avg per LCLid
 avg_kwh = data2.groupby('LCLid')['KWH/hh'].mean()
 print(avg_kwh)
 
 # identify rows with NaN KWH/hh values and dropping
-nan_rows = data2['KWH/hh'].isna()
+# nan_rows = data2['KWH/hh'].isna()
 # dropping nan values
 data2.dropna(subset=["KWH/hh"], inplace=True)
 
@@ -74,9 +76,9 @@ print(KWH_less_than_009, KWH_more_than_135)
 
 #transferring for data cleaning
 data3 = data2.copy()
-data.info()
+# data.info()
 
-data3.info()
+# data3.info()
 
 # droping rows as per limits set
 Yavg_kwh = data3.groupby('LCLid')['KWH/hh'].mean()
@@ -84,35 +86,35 @@ Yavg_kwh = data3.groupby('LCLid')['KWH/hh'].mean()
 # drop rows where the average 'KWH/hh' is less than 0.09 or more than 1.35
 to_drop = Yavg_kwh[(Yavg_kwh < 0.09) | (Yavg_kwh > 1.35)].index
 
-to_drop
+# to_drop
 
 data3 = data3[~data3['LCLid'].isin(to_drop)]
 
 # reset the index of the dataframe
 data3 = data3.reset_index(drop=True)
-data3
+# data3
 
 data4 = data.copy()
-data4
+# data4
 
-data.info()
-data2.info()
-data3.info()
-data4.info()
+# data.info()
+# data2.info()
+# data3.info()
+# data4.info()
 
 data4['KWH/hh'] = data4['KWH/hh'].replace('Null', np.nan)
-data4
+# data4
 
 # dropping nan values
 data4.dropna(subset=['KWH/hh'],inplace=True)
-data4.info()
-data4
+# data4.info()
+# data4
 
 data4 = data4[~data4['LCLid'].isin(to_drop)]
 
 # reset the index of the dataframe
 data4 = data4.reset_index(drop=True)
-data4
+# data4
 
 # counting readings
 count_s = data3.groupby('LCLid')['KWH/hh'].count()
@@ -163,7 +165,7 @@ kmeans_data = pd.DataFrame({
     'lowest_consumption': lowest_consumption
 })
 
-kmeans_data
+# kmeans_data
 
 # standardize the data
 from sklearn.preprocessing import StandardScaler
@@ -183,7 +185,7 @@ print(kmeans_data['cluster'].value_counts())
 #checking K-means data with cluster added
 # reset the index of kmeans_data
 kmeans_data = kmeans_data.reset_index(drop=True)
-kmeans_data
+# kmeans_data
 
 # merge the dataframes based on LCLid
 merged_data = pd.merge(data4, kmeans_data[['LCLid', 'cluster']], on='LCLid')
@@ -209,13 +211,13 @@ cluster_8_data = merged_data[merged_data['cluster'] == 7]
 cluster_9_data = merged_data[merged_data['cluster'] == 8]
 cluster_4_data = merged_data[merged_data['cluster'] == 3]
 cluster_7_data = merged_data[merged_data['cluster'] == 6]
-cluster_18_data.info()
+# cluster_18_data.info()
 
-cluster_18_data.to_csv('Cluster15data.csv', index=False)
-cluster_14_data.to_csv('Cluster14data.csv', index=False)
-cluster_8_data.to_csv('Cluster8data.csv', index=False)
-cluster_9_data.to_csv('Cluster9data.csv', index=False)
-cluster_4_data.to_csv('Cluster4data.csv', index=False)
-cluster_7_data.to_csv('Cluster7data.csv', index=False)
+cluster_18_data.to_csv('C:\\Users\\23304161\\Desktop\\LCL-FullData\\Cluster15data.csv', index=False)
+cluster_14_data.to_csv('C:\\Users\\23304161\\Desktop\\LCL-FullData\\Cluster14data.csv', index=False)
+cluster_8_data.to_csv('C:\\Users\\23304161\\Desktop\\LCL-FullData\\Cluster8data.csv', index=False)
+cluster_9_data.to_csv('C:\\Users\\23304161\\Desktop\\LCL-FullData\\Cluster9data.csv', index=False)
+cluster_4_data.to_csv('C:\\Users\\23304161\\Desktop\\LCL-FullData\\Cluster4data.csv', index=False)
+cluster_7_data.to_csv('C:\\Users\\23304161\\Desktop\\LCL-FullData\\Cluster7data.csv', index=False)
 
-cluster_18_data.to_csv('Cluster15data.csv', index=False)
+# cluster_18_data.to_csv('C:\\Users\\23304161\\Desktop\\LCL-FullData\\Cluster15data.csv', index=False)
