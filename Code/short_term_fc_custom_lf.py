@@ -325,7 +325,7 @@ for lclid, avg_kwh in average_kwh.items():
     print(f"LCLid: {lclid}, Average KWH/hh: {avg_kwh}")
 
 # Enter Client ID on whose local data , evaluation will be performed
-filtered_data44 = filtered_data[filtered_data['LCLid'] == 'MAC000169']
+filtered_data44 = filtered_data[filtered_data['LCLid'] == 'MAC003247']
 
 # Filter the data for 24th or 25th or 26th December 2013
 filtered_data_24th_dec_2013 = filtered_data44[filtered_data44['DateTime'].dt.date == pd.to_datetime('2013-12-26').date()]
@@ -379,15 +379,11 @@ for i in range(48):
     ft_data[i] = ft_data[i].drop('stdorToU', axis=1)
 
 # ft_data[5]
-
-for j in range(48):
-  ft_data[j]['DateTime'] = pd.to_datetime(ft_data[j].DateTime).dt.tz_localize(None)
-  for i in range(len(ft_data[j])):
-    ft_data[j]['DateTime'][i]=ft_data[j]['DateTime'][i].timestamp()
-
-for i in range(48):
-  ft_data[i]['DateTime'] = ft_data[i]['DateTime'].astype(np.float32)
-  ft_data[i].sort_values(['LCLid', 'DateTime'], inplace=True)
+# Iterate over each DataFrame in ft_data
+for df in ft_data:
+    df['DateTime'] = pd.to_datetime(df['DateTime']).dt.tz_localize(None)
+    df['DateTime'] = df['DateTime'].apply(lambda x: x.timestamp()).astype(np.float32)
+    df.sort_values(['LCLid', 'DateTime'], inplace=True)
 
 test_client = ft_data[7]['LCLid'].unique()
 
@@ -443,6 +439,7 @@ for i in range(48):
   loss_values_2.append(evaluation_output[i].metrics['client_work']['eval']['current_round_metrics']['mean_metrics'])
 
 # Print the MAE values
+print('loss_values_2')
 print(loss_values_2)
 
 # List to store all the loss values
@@ -453,18 +450,21 @@ for i in range(48):
   loss_values_1.append(evaluation_output[i].metrics['client_work']['eval']['current_round_metrics']['loss'])
 
 # Print the MAE values
+print('loss_values_1')
 print(loss_values_1)
 
 # Actual Day Values
 kwh_values_array = filtered_data_24th_dec_2013['KWH/hh'].values
 
 # Display the array of 'KWH/hh' values
+print('kwh_values_array')
 print(kwh_values_array)
 
 # Predicted Values = Actual Vlaues + loss
 predicted_values = kwh_values_array + loss_values_2
 
 # Display the predicted values array
+print('predicted_values')
 print(predicted_values)
 
 # Plotting Graph to see the day forecast
@@ -495,4 +495,4 @@ data = {
 df = pd.DataFrame(data)
 
 # Export the DataFrame to a CSV file
-df.to_csv('actual_vs_predicted.csv', index=False)
+df.to_csv('/home/william/actual_vs_predicted.csv', index=False)
